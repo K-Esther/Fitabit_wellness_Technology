@@ -1,0 +1,536 @@
+---
+title: ' How Can a Wellness Technology Company Play It Smart? - Bellabeat'
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+## Ask
+Characters and products
+
+### ● Stakeholders
+○ Urška Sršen: Bellabeat’s cofounder and Chief Creative Officer
+○ Sando Mur: Mathematician and Bellabeat’s cofounder; key member of the Bellabeat executive team
+○ Bellabeat marketing analytics team
+
+### ● About Bellabeat Products
+1.	Bellabeat app: The Bellabeat app provides users with health data related to their activity, sleep, stress, menstrual cycle, and mindfulness habits. This data can help users better understand their current habits and make healthy decisions. The Bellabeat app connects to their line of smart wellness products.
+2.	Leaf: Bellabeat’s classic wellness tracker can be worn as a bracelet, necklace, or clip. The Leaf tracker connects to the Bellabeat app to track activity, sleep, and stress.
+3. Time: This wellness watch combines the timeless look of a classic timepiece with smart technology to track user activity, sleep, and stress. The Time watch connects to the Bellabeat app to provide you with insights into your daily wellness. 
+4.  Spring: This is a water bottle that tracks daily water intake using smart technology to ensure that you are appropriately hydrated throughout the day. The Spring bottle connects to the Bellabeat app to track your hydration levels.
+5.  Bellabeat membership: Bellabeat also offers a subscription-based membership program for users. Membership gives users 24/7 access to fully personalized guidance on nutrition, activity, sleep, health and beauty, and mindfulness based on their lifestyle and goals.
+ 
+
+### About the company
+Urška Sršen and Sando Mur founded Bellabeat, a high-tech company that manufactures health-focused smart products.
+Sršen used her background as an artist to develop beautifully designed technology that informs and inspires women around the world. Collecting data on activity, sleep, stress, and reproductive health has allowed Bellabeat to empower women with knowledge about their own health and habits. Since it was founded in 2013, Bellabeat has grown rapidly and quickly positioned itself as a tech-driven wellness company for women.
+
+By 2016, Bellabeat had opened offices around the world and launched multiple products. Bellabeat products became available through a growing number of online retailers in addition to their own e-commerce channel on their website. The company has invested in traditional advertising media, such as radio, out-of-home billboards, print, and television, but focuses on digital marketing extensively. Bellabeat invests year-round in Google Search, maintaining active Facebook and Instagram pages, and consistently engages consumers on Twitter. Additionally, Bellabeat runs video ads on Youtube and display ads on the Google Display Network to support campaigns around key marketing dates.
+
+Sršen knows that an analysis of Bellabeat’s available consumer data would reveal more opportunities for growth. She has asked the marketing analytics team to focus on a Bellabeat product and analyze smart device usage data in order to gain insight into how people are already using their smart devices. Then, using this information, she would like high-level recommendations for how these trends can inform Bellabeat marketing strategy.
+
+## Business task
+1.	kaggle datasets download -d arashnic/fitbit
+
+
+## Process
+Data source:
+\href{https://www.kaggle.com/arashnic/fitbit}
+
+
+### Installing and loading needed packages and libraries
+```{r echo=FALSE}
+#install.packages("tidyverse")
+#install.packages(skimr)
+library(tidyverse)
+library(skimr)
+
+```
+#### Importing the datasets
+```{r echo=FALSE}
+dailyActivity <- read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/dailyActivity_merged.csv")
+
+dailyCalories <- read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/dailyCalories_merged.csv")
+
+dailyIntensities <- read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/dailyIntensities_merged.csv")
+
+dailySteps <- read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/dailySteps_merged.csv")
+
+heartrate_seconds <- read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/heartrate_seconds_merged.csv")
+
+hourlyCalories<-read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/hourlyCalories_merged.csv")
+
+
+hourlyintensities<-read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/hourlyintensities_merged.csv")
+
+
+hourlysteps<-read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/fitabase_data/hourlysteps_merged.csv")
+
+minuteCaloriesNarrow <- 
+  read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/minuteCaloriesNarrow_merged.csv")
+
+minuteIntensitiesNarrow <- 
+  read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/minuteIntensitiesNarrow_merged.csv")
+
+minuteStepsNarrow <- 
+  read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/minuteStepsNarrow_merged.csv")
+
+minuteMETsNarrow <- 
+  read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/minuteMETsNarrow_merged.csv")
+
+minuteSleep <- 
+  read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/minuteSleep_merged.csv")
+
+sleepDay <- 
+  read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/sleepDay_merged.csv")
+
+weightLoginfo <- 
+  read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/weightLogInfo_merged.csv")
+```
+```{r}
+sleepDay <- 
+  read_csv("C:/Users/Koyenikan Arinola/Desktop/New folder/Fitabase_data/sleepDay_merged.csv")
+```
+```{r echo=FALSE}
+skim_without_charts(hourlysteps)
+n_distinct(hourlysteps$Id)
+```
+```{r echo=FALSE}
+
+skimr::skim_without_charts(hourlyCalories)
+```
+```{r echo=FALSE}
+n_distinct(hourlyCalories$Id)
+
+```
+```{r echo=FALSE}
+
+skimr::skim_without_charts(hourlyintensities)
+
+```
+```{r echo=FALSE}
+n_distinct(hourlyintensities$Id)
+
+```
+```{r echo=FALSE}
+skimr::skim_without_charts(hourlyCalories)
+```
+```{r echo=FALSE}
+n_distinct(hourlyintensities$Id)
+```
+```{r echo=FALSE}
+skimr::skim_without_charts(heartrate_seconds)
+```
+```{r echo=FALSE}
+n_distinct(heartrate_seconds$Id)
+```
+```{r echo=FALSE}
+
+skimr::skim_without_charts(dailyActivity)
+```
+```{r echo=FALSE}
+n_distinct(dailyActivity$Id)
+```
+```{r echo=FALSE}
+
+skimr::skim_without_charts(dailyCalories)
+n_distinct(dailyCalories$Id)
+```
+```{r echo=FALSE}
+skimr::skim_without_charts(dailyIntensities)
+```
+```{r echo=FALSE}
+n_distinct(dailyIntensities$Id)
+```
+```{r echo=FALSE}
+skimr::skim_without_charts(minuteCaloriesNarrow)
+```
+```{r echo=FALSE}
+n_distinct(minuteCaloriesNarrow$Id)
+```
+```{r echo=FALSE}
+skimr::skim_without_charts(minuteIntensitiesNarrow)
+```
+```{r echo=FALSE}
+n_distinct(minuteIntensitiesNarrow$Id)
+```
+```{r echo=FALSE}
+skimr::skim_without_charts(minuteStepsNarrow)
+```
+```{r echo=FALSE}
+n_distinct(minuteStepsNarrow$Id)
+```
+```{r echo=FALSE}
+skimr::skim_without_charts(minuteMETsNarrow)
+```
+```{r echo=FALSE}
+n_distinct(minuteMETsNarrow$Id)
+```
+```{r echo=FALSE}
+skimr::skim_without_charts(sleepDay)
+```
+```{r echo=FALSE}
+n_distinct(sleepDay$Id)
+```
+```{r echo=FALSE}
+skimr::skim_without_charts(weightLoginfo)
+```
+```{r echo=FALSE}
+n_distinct(weightLoginfo$Id)
+
+```
+#### Datasets needed for the analysis are:
+hourlySteps, hourlyCalories, hourlyIntensities,  Dailyactivity, sleepDay. This is because there are 33 and 24 distinct user's activities to analyze and the goal of this analysis to check for activities by hour and day. weightloginfo and heartrate datasets have 8 and 14 distinct users inputs which is not enough for inference
+
+### Preparing the datasets and creating data frames
+```{r}
+hourlycalories <- hourlyCalories%>%arrange(Id)#For uniform order
+
+hourlysteps
+hourlyActivity_df <- data.frame(hourlyintensities,total_calories=hourlycalories$Calories,
+                                Total_Steps= hourlysteps$StepTotal)
+
+```
+
+```{r}
+hourlyActivity_df_sep<-hourlyActivity_df%>%
+  separate(col=ActivityHour,into = c('the_date', 'the_time'),sep=" ")
+```
+## Analyse
+
+### Checking for correlation between User's Intensity, Steps, Calories
+```{r echo=FALSE}
+#ggplot2 representation of correlation
+ggplot(data=hourlyActivity_df_sep, aes(x=TotalIntensity, y=Total_Steps)) + geom_point()+geom_smooth()+
+  labs(title = "Total_Steps vs Total_Intensity", subtitle = "")+
+  annotate("text", x=50,y=7500,label="high correlation of 0.89",color="Blue", 
+           fontface="bold", size=3.5)
+#Statical representation of correlation  
+cor.test(hourlyActivity_df_sep$TotalIntensity,hourlyActivity_df_sep$Total_Steps)
+
+ggplot(data=hourlyActivity_df_sep, aes(x=Total_Steps, y=total_calories)) + geom_point()+geom_smooth()+
+  labs(title = "Total_calories vs Total_Intensity", subtitle = "")+
+  annotate("text", x=6250,y=750,label="high correlation of 0.81",color="Blue", 
+           fontface="bold", size=3.5)
+
+cor.test(hourlyActivity_df_sep$Total_Steps,hourlyActivity_df_sep$total_calories)
+```
+The plot shows a linear relationship between Total_steps and Total_calories burnt. Alerting Users on their total steps taken at intervals and Introducing challenges that helps in taking more steps would help users interested in burning more calories, which will result to happier users.
+```{r echo=FALSE}
+ggplot(data=hourlyActivity_df_sep, aes(x=TotalIntensity, y=total_calories)) + geom_point()+geom_smooth()+
+  labs(title = "Total_calories vs Total_Intensity", subtitle = "")+
+  annotate("text", x=50,y=625,label="high correlation of 0.9",color="Blue", 
+           fontface="bold", size=3.5)
+
+cor.test(hourlyActivity_df_sep$TotalIntensity,hourlyActivity_df_sep$total_calories)
+```
+The plot shows a positive linear relationship between Total_intensity and Total_calories burnt. Introducing workout challenges would help users interested in burning more calories.
+### Checking the for the most active hour of the day
+
+```{r echo=FALSE}
+#Data frame grouped by time and summarised by the average activities
+timelyActivity <-distinct(hourlyActivity_df_sep%>%
+  group_by(The_time=format(as.POSIXct(the_time,format='%H:%M:%S'), format="%H:%M %p"))%>%
+    summarise(Total_Intensity=round(ave(TotalIntensity),digits = 1),
+            Total_Calories=round(ave(total_calories),digits = 1),
+            Total_Steps=round(ave(Total_Steps),digits = 1)))
+
+write.csv(timelyActivity, "C:/Users/Koyenikan Arinola/Desktop/New folder/timelyActivity2.csv", row.names = TRUE)
+```
+
+### Checking for the time with the highest intensities and calories burnt
+```{r echo=FALSE}
+#ggplot of time to intensity
+ggplot(data=timelyActivity, aes(The_time, y=Total_Intensity, group=1)) + geom_point()+geom_line(color="red")+
+  labs(title = "Time Vs Average_Intensity", subtitle = "Time with the highest instensity")+
+  annotate("text", x="21:00 PM",y=21.9,label=" 18:00 PM has the highest intensity",color="Blue", 
+           fontface="bold", size=2.5)+
+  theme(axis.text.x = element_text(angle = 45))
+
+#ggplot of time to intensity
+ggplot(data=timelyActivity, aes(The_time, y=Total_Calories, group=1)) + geom_point()+geom_line(color="red")+
+  labs(title = "Time Vs Average_Calories", subtitle = "Time with the highest calories")+
+  annotate("text", x="21:00 PM",y=125,label=" 18:00 PM has the highest calories",color="Blue", 
+           fontface="bold", size=2.5)+
+  theme(axis.text.x = element_text(angle = 45))
+
+```
+
+### Checking for the time with the most steps 
+```{r echo=FALSE}
+
+ggplot(data=timelyActivity, aes(The_time, y=Total_Steps, group=1)) + geom_point()+geom_line(color="red")+
+  labs(title = "Time Vs Total_Steps", subtitle = "Time with the highest steps")+
+  annotate("text", x="21:00 PM",y=600,label=" 18:00 PM has the highest steps",color="Blue", 
+           fontface="bold", size=2.5)+
+  theme(axis.text.x = element_text(angle = 45))
+```
+The graph shows that there are more Activities going at 18:00 PM, 17:00 PM and 17:00 PM respectively and little or no activity at 2:00 AM, 3:00 AM and 1:00 AM. Creating a schedule reminder or alerting Users in the evening on steps or intensity would help create a routine which results to healthy habits.
+
+### Checking the for the daily trend 
+```{r echo=FALSE}
+DailyActivity_df_sep<-dailyActivity%>%
+  separate(col=ActivityDate,into = c('the_date', 'the_time'),sep=" ")
+
+DailyActivity <- distinct(DailyActivity_df_sep%>%
+  group_by(Date=as.Date(the_date,"%m/%d/%Y"))%>%
+    summarise(
+            Average_Calories=round(ave(Calories),digits=1), 
+            Average_Steps=round(ave(TotalSteps),digit=1)))%>%
+  mutate(week_days=weekdays.Date(as.Date(Date,"%m/%d/%Y")))
+write.csv(DailyActivity, "C:/Users/Koyenikan Arinola/Desktop/New folder/DailyActivity2.csv", row.names = TRUE)
+```
+The plots above shows a slight decrease in users activities, creating reminders and challenges would help Users stay consistent.
+
+
+### Checking for activites by days of the week
+```{r echo=FALSE}
+
+WeekdaysActivity_df <- distinct(DailyActivity%>%
+  group_by(week_days)%>%
+    summarise(
+            Average_Calories=ave(Average_Calories), 
+            Average_Steps=ave(Average_Steps)) %>%
+  arrange(desc(Average_Steps)))
+WeekdaysActivity_df
+```
+### Users on an average are more active on Saturdays and tuesdays and least active of Sundays
+```{r echo=FALSE}
+
+ggplot(data=WeekdaysActivity_df, aes(x =week_days, y = Average_Steps))+geom_col()+ 
+  labs(title = "Average_Steps Vs. Week_days ")
+
+ggplot(data=WeekdaysActivity_df, aes(x =week_days, y = Average_Calories))+geom_col()+
+  labs(title = "Average_Steps Vs. Week_days ")
+
+```
+The plots above shows the highest Average steps and Calories in days of the week.  Creating a schedule reminder or alerting Users on the Saturdays or Tuesdays or days the would be available would help create a weekly routine which results to healthy habits.
+
+### there's a Slight decrease in average calories taken by day
+```{r echo=FALSE}
+#Average calories per day
+ggplot(data=DailyActivity, aes(x=Date, y=Average_Calories)) + geom_point()+geom_smooth()+
+  labs(title = "Average calories vs Date", subtitle = "Trend of the average calories by day")+
+  theme(axis.text.x = element_text(angle = 45))
+```
+### there's a Slight decrease in  average steps taken by day
+```{r echo=FALSE}
+ggplot(data=DailyActivity, aes(x=Date, y=Average_Steps)) + geom_point()+geom_smooth()+
+  labs(title = "Average steps taken vs Date", subtitle = "Trend of the average steps by day")+
+  theme(axis.text.x = element_text(angle = 45)) 
+```
+### Verifying the decline by day filtering saturdays and tuesdays
+
+```{r echo=FALSE}
+saturday_filt <- DailyActivity%>%
+  filter(week_days=="Saturday")
+
+ggplot(data=saturday_filt, aes(x= Date, y=Average_Calories, group=1)) + geom_point()+geom_line(color="red")
+ggplot(data=saturday_filt, aes(x= Date, y=Average_Steps, group=1)) + geom_point()+geom_line(color="red")
+```
+```{r echo=FALSE}
+tuesday_filt <- DailyActivity%>%
+  filter(week_days=="Friday")
+
+ggplot(data=tuesday_filt, aes(x= Date, y= Average_Calories, group=1)) + geom_point()+geom_line(color="red")
+ggplot(data=tuesday_filt, aes(x=  Date, y= Average_Steps, group=1)) + geom_point()+geom_line(color="red")
+```
+From the Plots above, there's a decline on saturdays but inconsistent variation on tuesdays
+
+### Checking for the general percentage of Users' activities based on levels:
+The average calories and steps by day representation
+```{r echo=FALSE} 
+UserActivity_info1<- c("ActivityLevel", "High", "Low", "Medium", "Very Low")
+
+UserActivity_infoCalories<- c("Calories", "Above 2700", "between 1600 and 2000", "between 2000 and 2700", "less than 1600")
+
+UserActivity_infoSteps<- c("Calories", "Above 10000", "between 4000 and 7000", "between 7000 and 10000", "less than 4000")
+
+data.frame(UserActivity_info1, UserActivity_infoCalories, UserActivity_infoSteps)
+```
+
+```{r echo=FALSE}
+
+
+UserActivity <- distinct(DailyActivity_df_sep%>%
+  group_by(Id)%>%
+    summarise(Average_Calories=round(ave(Calories),digits=1), 
+            Average_Steps=round(ave(TotalSteps),digit=1)) %>%
+  mutate(rangeCalories=case_when(Average_Calories<1600 ~ "Very low",Average_Calories<=2000 ~ "Low", Average_Calories<=2500 ~ "Medium",Average_Calories>2500 ~ "High"),
+         rangeSteps=case_when(Average_Steps<4000 ~ "Very low",Average_Steps<=7000 ~ "Low", Average_Steps<10000 ~ "Medium",Average_Steps>10000 ~ "High")))
+
+write.csv(UserActivity, "C:/Users/Koyenikan Arinola/Desktop/New folder/UserActivity2.csv", row.names = TRUE)
+```
+
+
+#### Summary of user's average activity by day
+```{r echo=FALSE} 
+UserActivity_Calories<-distinct(UserActivity%>%group_by(Range=rangeCalories)%>%
+                                  count(rangeCalories))%>%
+arrange(Range)
+
+UserActivity_Steps<-distinct(UserActivity%>%group_by(Range=rangeSteps)%>%
+                                  count(rangeSteps))%>%
+arrange(Range)
+UserActivity_Level <- data.frame(ActivityLevel = UserActivity_Calories$Range,
+                       Calories = paste(round((UserActivity_Calories$n/33)*100,digits = 1),"%",sep = ""),
+                       Steps = paste(round((UserActivity_Steps$n/33)*100,digits = 1),"%", sep=""))
+
+write.csv(UserActivity_Level, "C:/Users/Koyenikan Arinola/Desktop/New folder/USerActivity_Level2.csv", row.names = TRUE)
+```
+```{r echo=FALSE}
+ggplot(data=UserActivity_Level, aes(x =ActivityLevel , y = Calories,))+geom_col()+
+  labs(title = "Calories Vs. ActivityLevel ")
+
+ggplot(data=UserActivity_Level, aes(x =ActivityLevel , y = Steps,))+geom_col()+
+  labs(title = "Steps Vs. ActivityLevel ")
+```
+
+### Checking correlation between users and Total minutes as sleep
+```{r}
+ggplot(data=sleepDay, aes(x=TotalMinutesAsleep, y=TotalTimeInBed)) + geom_point()+geom_smooth()+
+  labs(title = "TotalMinutesAsleep Vs. Total TimeInBed", subtitle = "correlation between TotalMinutesAsleep and TotalTimeInBed")
+
+cor(sleepDay$TotalMinutesAsleep, sleepDay$TotalTimeInBed)
+```
+The above shows a strong relationship and high correlation between Total time in bed and total minutes asleep
+
+### Relation ship between total minutes asleep and total sleep record
+```{r echo=FALSE}
+ggplot(data=sleepDay, aes(x=TotalSleepRecords, y=TotalMinutesAsleep)) + geom_point()+geom_smooth()+
+  labs(title = "TotalMinutesAsleep Vs. TotalSleepRecords", subtitle = "correlation between TotalMinutesAsleep and TotalSleepRecords")+
+  annotate("text", x=2,y=800,label="very low correlation of 0.1",color="Blue", 
+           fontface="bold", size=3.5)
+
+
+cor(sleepDay$TotalMinutesAsleep, sleepDay$TotalTimeInBed)
+```
+The plot shows that that users who slept more than once per day got more total sleep time
+
+###Users' sleep level
+```{r echo=FALSE}
+Users_sleep_level<- distinct(sleepDay %>% 
+  group_by(Id) %>%
+  summarise(Average_sleep = ave(TotalMinutesAsleep))%>%
+  mutate(SleepLevel=cut(Average_sleep, breaks=c(0, 300, 400,500, Inf), 
+                   labels=c("Low sleep time ","Average sleep time","healthy Sleep Time", "high sleep time"))))
+Users_sleep_level
+write.csv(Users_sleep_level, "C:/Users/Koyenikan Arinola/Desktop/New folder/Users_sleep_level2.csv", row.names = TRUE)
+```
+```{r echo=FALSE}
+Users_sleep_level %>% 
+  ggplot(mapping = aes(x=SleepLevel ))+geom_bar() +
+  labs(title = "User sleep level")
+```
+
+
+```{r echo=FALSE}
+UserActivity_Calories<-distinct(UserActivity%>%group_by(Range=rangeCalories)%>%
+                                  count(rangeCalories))
+SleepLevel <- Users_sleep_level%>%
+  group_by(SleepLevel)%>%
+  count(SleepLevel)
+
+
+SleepLevel_df <- data.frame(SleepLevel=SleepLevel$SleepLevel, Percentage = paste(round((SleepLevel$n/33)*100, digits=1),"%", sep = ""))
+SleepLevel_df
+```
+
+### Relationship between daily activity and minutes asleep
+```{r}
+Sleepday_sep<-sleepDay %>%
+  separate(col=SleepDay,into = c('the_date', 'the_time'),sep=" ")
+
+Sleepday_sep2 <- Sleepday_sep %>% 
+                            group_by(Id, the_date=as.Date(the_date,"%m/%d/%Y"))%>%
+                            summarise(TotalMinutesAsleep,TotalTimeInBed, TotalSleepRecords)
+
+DailyActivity_df_sep2 <-DailyActivity_df_sep%>%
+  summarise(the_date=as.Date(the_date,"%m/%d/%Y"),Id, the_date,TotalSteps, Calories, TotalActivity = VeryActiveDistance + LightlyActiveMinutes+ SedentaryMinutes + FairlyActiveMinutes + SedentaryActiveDistance)
+ 
+SleepVsActivity<-merge(Sleepday_sep2, DailyActivity_df_sep2,by=c("Id","the_date"))
+
+write.csv(SleepVsActivity, "C:/Users/Koyenikan Arinola/Desktop/New folder/SleepVsActivity2.csv", row.names = TRUE)
+```
+### The relationship between Steps/Calories and Total minutes asleep
+```{r}
+ggplot(data=SleepVsActivity, aes(x=TotalSteps, y=TotalMinutesAsleep)) + geom_point()+geom_smooth()+
+  labs(title = "Users' TotalMinutesAsleep Vs. TotalCalories", subtitle = "Correlation between TotalMinutesAsleep and TotalCalories") +
+  annotate("text", x=15000,y=600,label="no correlation: -0.19",color="Blue", 
+           fontface="bold", size=3.5)
+
+cor(SleepVsActivity$TotalSteps, SleepVsActivity$TotalMinutesAsleep)
+
+
+ggplot(data=SleepVsActivity, aes(x=Calories, y=TotalMinutesAsleep)) + geom_point()+geom_smooth()+
+  labs(title = "Users' TotalMinutesAsleep Vs. TotalCalories", subtitle = "Correlation between TotalMinutesAsleep and TotalCalories") +
+  annotate("text", x=2500,y=550,label="no correlation: -0.029",color="Blue", 
+           fontface="bold", size=3.5)
+
+cor(SleepVsActivity$Calories, SleepVsActivity$TotalMinutesAsleep)
+```
+The plot above shows that there's no relationship between steps/calories burnt and total minutes asleep
+
+
+### The relationship between total sleep minutes and total activity
+```{r}
+ggplot(data=SleepVsActivity, aes(x=TotalMinutesAsleep, y=TotalActivity)) + geom_point()+geom_smooth()+
+  labs(title = "Users' TotalMinutesAsleep Vs. TotalCalories", subtitle = "Correlation between TotalMinutesAsleep and TotalCalories") +
+  annotate("text", x=600,y=1250,label="no correlation: -0.62",color="Blue", 
+           fontface="bold", size=3.5)
+
+cor(SleepVsActivity$TotalActivity, SleepVsActivity$TotalMinutesAsleep)
+
+```
+The plot above shows a negative relationship between total sleep minutes and total activities which implies that activities keep users awake 
+
+
+### The relationship between Calories and Total activity
+```{r}
+ggplot(data=SleepVsActivity, aes(x= TotalActivity, y = Calories)) + geom_point()+geom_smooth()+
+  labs(title = "Users' TotalMinutesAsleep Vs. TotalCalories")
+
+```
+The plot above shows a positive relationship between the total active minutes and the total calories burnt. This implies that active minute during the day contributes to the amount of calories burnt.
+
+
+### Recommendations for Bellabeats from the Analysis.
+
+#### Observation:
+ 63.7% of users burns less 2700 calories and 42.2% takes less than 10000 steps daily
+
+There's a high positive relationship and high correlation between;
+ ○ Calories burnt and steps taken; the higher steps taken the more calories burnt
+ ○ Calories burnt and total intensity; 
+ ○ Steps taken and total intensity
+There's a positive relationship
+ ○ Calories and total activity minutes
+ 
+ 
+#### Recommendation: 
+Bellabeats can leverage on this finding to educate its users on impacts on intensities, steps taken, activities affects calories burnt job suits users' various needs such as gaining, burning  or maintaining their calories in take for healthy living.
+
+#### Observation:
+ ○ There's higher intensities, steps taken, calories burnt at 5:00 pm, 6:00 pm, 7:00 pm and lower records between 1:00 am and 3:00 am
+ ○ There's higher intensities, steps taken, calories burnt on Saturdays and Tuesdays
+ ○ There's a slight decline in trends of calories and steps taken on Saturdays and inconsistent trends on other days of the week.
+ 
+#### Recommendation: 
+It is observed that there's high record of intensities, steps and calories during after working hours. Bellabeats can leverage on this information to create various workout or eatot challenges and also create scheduling features so users can include these challenges to their daily or weekly routines during their free time for consistency and healthy habits. 
+
+#### Observation: 
+18.2% of users sleeps below 300 minutes per day and 6.1% of users sleeps above 500 minutes.
+
+There's a high positive relationship and high correlation between;
+ ○ Total minutes asleep and total minutes in bed; users who stay in bed more sleep more.
+ 
+There's a negative relationship
+ ○ Total minutes asleep and total activities minutes; this means that users who are more active sleep less. 
+ 
+Users who sleep more than once per day have higher minutes asleep asleep.
+
+Calories burnt have no relationship with the total minutes asleep
+
+#### Recommendation: 
+Bellabeats can make use of this information to educate users on the health benefits of just enough sleeps and how the amount time in bed affects the total time asleep. Creating a scheduling feature and alarm feature will remind users to take a nap wake up as the case may be. 
